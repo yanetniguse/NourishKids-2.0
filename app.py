@@ -69,13 +69,17 @@ if st.button("🔍 Predict Nutrition Status"):
     labels = ['Normal', 'At Risk', 'Malnourished']
     status_map = {0: "🟢 Normal", 1: "🟠 At Risk", 2: "🔴 Malnourished"}
 
-    # Override logic (optional)
+    # Override prediction based on thresholds (force red flag if Malnourished is high)
     if probs[2] > 0.30:
         override = "🔴 Malnourished"
     elif probs[1] > 0.30:
         override = "🟠 At Risk"
     else:
-        override = status_map[prediction]
+        override = "🟢 Normal"
+
+    st.subheader("Prediction (Rule-Augmented):")
+    st.markdown(f"<h3 style='color: teal;'>{override}</h3>", unsafe_allow_html=True)
+
 
     # Display prediction
     st.subheader("Prediction:")
